@@ -46,6 +46,14 @@
           <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6" *ngFor="let result of results; index as i">
             <div class="card">
               <div class="card-body">
+                <div class="row mb-1">
+                  <div class="col-1" style="padding-right:0px">
+                  </div>
+                  <div class="col-10" style="padding-left:0px">
+                    <h5 class="float-right"><em>{{result.dateString}}</em></h5>
+                  </div>
+                </div>
+
                 <div class="row">
                   <div class="col-1">
                   </div>

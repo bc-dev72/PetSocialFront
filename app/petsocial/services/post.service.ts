@@ -51,7 +51,7 @@ export class PostService {
 
 
   getRandomDogImage() {
-    return this.http.get<any>(this.baseUrl+"https://dog.ceo/api/breeds/image/random");
+    return this.http.get<any>("https://dog.ceo/api/breeds/image/random");
   }
 
   getImage(link) {

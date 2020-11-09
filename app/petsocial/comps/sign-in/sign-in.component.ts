@@ -139,9 +139,6 @@ export class SignInComponent implements OnInit {
       this.router.navigate(["/petsocial/home"])
     },
     (err)=>{ this.httpError(0, err); this.loading = false;});
-
-
-
   }
 
 

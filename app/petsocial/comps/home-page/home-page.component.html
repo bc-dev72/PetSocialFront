@@ -27,11 +27,12 @@
           <div class="col-12">
               <div class="card mb-3">
                   <div class="card-body">
-                    <div class="row">
+                    <div class="row mb-1">
                       <div class="col-1" style="padding-right:0px">
                       </div>
                       <div class="col-10" style="padding-left:0px">
                         <a href="javascript:void(0)" [routerLink]="['/petsocial/profile', result.username]"><h5 class="float-left">{{result.username}}</h5></a>
+                        <h5 class="float-right"><em>{{result.dateString}}</em></h5>
                       </div>
                     </div>
 
