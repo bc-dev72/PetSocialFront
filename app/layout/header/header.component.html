@@ -1,0 +1,123 @@
+<nav #navbar class="navbar active">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" onClick="return false;" class="navbar-toggle collapsed"
+        (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-expanded="false"></a>
+      <a href="#" onClick="return false;" class="bars" (click)="mobileMenuSidebarOpen($event,'overlay-open')"></a>
+      <a class="navbar-brand" routerLink={{homePage}}>
+        <!-- <img src="assets/images/logo.png" alt="" /> -->
+        <!-- <span class="logo-name">Smart</span> -->
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed">
+      <ul class="pull-left collapse-menu-icon">
+        <li>
+          <button mat-icon-button (click)="callSidemenuCollapse()" class="sidemenu-collapse">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" *ngIf="isPetSocial">
+        <!-- Full Screen Button -->
+        <li class="fullscreen">
+          <button mat-icon-button class=" nav-notification-icons" style="color:#3f51b5" (click)="goHome()">
+            <mat-icon>home</mat-icon>
+          </button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary" class="mr-3" *ngIf="petSocialAuthed" (click)="viewYourPage()">View your profile</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary" class="mr-3" *ngIf="petSocialAuthed" (click)="createPost(content)">Create Post</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary" class="mr-3" *ngIf="petSocialAuthed" (click)="signOut()">Sign Out</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary" class="mr-3" *ngIf="!petSocialAuthed" routerLink="/petsocial/sign" [queryParams]="{type:'in'}">Sign In</button>
+        </li>
+        <li>
+          <button mat-raised-button color="primary" class="mr-3" *ngIf="!petSocialAuthed" routerLink="/petsocial/sign" [queryParams]="{type:'up'}">Sign Up</button>
+        </li>
+        <!-- #END# Full Screen Button -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Post</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" [disabled]="createPostLoading">
+      <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div *ngIf="createPostLoading" class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <div class="preloader">
+          <div class="spinner-layer pl-purple">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!createPostLoading">
+      <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="text-center">
+                  <button mat-raised-button type="button" color="primary" (click)="getRandomImage()">Get Random Image</button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="text-center">
+                  <input type="file" name="filename" accept="image/*" (change)="createPostImageUploaded($event)">
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2" *ngIf="imageUploaded">
+              <div class="col-12">
+                <div class="text-center course-card-top-overflow">
+                    <img src="{{uploadedImg}}" width="1200" height="600">
+                </div>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-1">
+              </div>
+              <div class="col-12">
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label class="col-gray">Description</mat-label>
+                  <textarea matInput [(ngModel)]="description" maxlength="200"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <div class="text-center">
+                  <p class="col-pink">{{createPostError}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button mat-button type="button" (click)="modal.close()" [disabled]="createPostLoading">Cancel</button>
+    <button mat-raised-button type="button" color="primary" (click)="savePost()" [disabled]="createPostLoading">Post!</button>
+  </div>
+</ng-template>

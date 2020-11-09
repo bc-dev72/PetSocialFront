@@ -1,0 +1,302 @@
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-4">
+      </div>
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <h2 class="text-center">Welcome to {{username}}'s page</h2>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-1 col-xl-1">
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
+        <div class="row" *ngIf="loading">
+          <div class="col-12">
+            <div class="text-center">
+              <div class="preloader pl-size-xl">
+              <div class="spinner-layer pl-purple">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6" *ngFor="let result of results; index as i">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-1">
+                  </div>
+                  <div class="col-10">
+                    <div class="course-card-top-overflow text-center">
+                      <img width="1200" height="600" src="{{result.image}}" (click)="openPost(i, content)">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-3" *ngIf="result.changeLoading">
+                  <div class="col-12">
+                    <div class="text-center">
+                      <div class="preloader">
+                      <div class="spinner-layer pl-purple">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="" *ngIf="!result.changeLoading && result.deleted">
+                  <div class="row mt-1">
+                      <div class="col-1">
+                      </div>
+                      <div class="col-10">
+                        <h5 class="col-pink text-center">Deleted</h5>
+
+                      </div>
+                  </div>
+                </div>
+
+                <div class="" *ngIf="!result.changeLoading && !result.deleted">
+                  <div class="row mt-1">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10">
+                      <p class="col-pink text-center"><em>{{result.error}}</em></p>
+                    </div>
+                  </div>
+
+                  <div class="row mt-1">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10">
+                      <div class="row mt-2">
+                        <div class="col-1" style="padding-left:0px;padding-right:0px">
+                          <a (click)="upvote(i)" href="javascript:void(0)"><i class="fas fa-arrow-alt-circle-up fa-2x upvote float-left" [ngClass]="{'upvoted': result.currentVote == 1}"></i></a>
+                        </div>
+
+                        <div class="col-2" style="padding-left:0px;padding-right:0px">
+                          <h5 class="text-center">{{result.voteCount}}</h5>
+                        </div>
+
+                        <div class="col-1" style="padding-left:0px;padding-right:0px">
+                          <a (click)="downvote(i)" href="javascript:void(0)"><i class="fas fa-arrow-alt-circle-down fa-2x downvote float-right" [ngClass]="{'downvoted': result.currentVote == -1}"></i></a>
+                        </div>
+                        <div class="col-8" style="padding-left:0px;padding-right:0px">
+                          <div class="float-right" *ngIf="canDelete">
+                            <a (click)="delete(i)" href="javascript:void(0)"><i class="ml-2 fas fa-trash fa-2x trash" [ngClass]="{'favorited': result.deleted}"></i></a>
+                          </div>
+                          <div class="float-right">
+                            <a (click)="favorite(i)" href="javascript:void(0)"><i class="fas fa-star fa-2x favorite" [ngClass]="{'favorited': result.favorited}"></i></a>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row" *ngIf="!loading && gettingNewPage">
+          <div class="col-12">
+            <div class="text-center">
+              <div class="preloader pl-size-xl">
+              <div class="spinner-layer pl-purple">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="!loading && !gettingNewPage && noMoreResults">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="text-center">There are no more posts</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+</section>
+
+
+<ng-template #content let-modal>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-12">
+          <div class="">
+              <div class="">
+                <div class="row">
+                  <div class="col-1">
+                  </div>
+                  <div class="col-10">
+                    <div class="course-card-top-overflow text-center">
+                      <img width="1200" height="600" src="{{results[currentModalIndex].image}}">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-3" *ngIf="results[currentModalIndex].changeLoading">
+                  <div class="col-12">
+                    <div class="text-center">
+                      <div class="preloader pl-size-xl">
+                      <div class="spinner-layer pl-purple">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="" *ngIf="!results[currentModalIndex].changeLoading">
+                  <div class="row mt-1">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10">
+                      <div class="row mt-2">
+
+                        <div class="col-1">
+                          <a (click)="upvote(currentModalIndex)" href="javascript:void(0)"><i class="fas fa-arrow-alt-circle-up fa-2x upvote float-left" [ngClass]="{'upvoted': results[currentModalIndex].currentVote == 1}"></i></a>
+                        </div>
+
+                        <div class="col-2">
+                          <h5 class="text-center">{{results[currentModalIndex].voteCount}}</h5>
+                        </div>
+
+                        <div class="col-1">
+                          <a (click)="downvote(currentModalIndex)" href="javascript:void(0)"><i class="fas fa-arrow-alt-circle-down fa-2x downvote float-right" [ngClass]="{'downvoted': results[currentModalIndex].currentVote == -1}"></i></a>
+                        </div>
+
+
+                          <div class="col-8">
+                            <div class="float-right">
+                              <a (click)="favorite(currentModalIndex)" href="javascript:void(0)"><i class="fas fa-star fa-2x favorite" [ngClass]="{'favorited': results[currentModalIndex].favorited}"></i></a>
+                            </div>
+                          </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10">
+                      <div class="row">
+                        <div class="col-12">
+                          <p><b><a href="javascript:void(0)">{{results[currentModalIndex].username}}</a></b>- {{results[currentModalIndex].desc}}</p>
+                        </div>
+                      </div>
+
+                      <hr style="height:1px;color:white;background-color:gray;padding-top:0px">
+
+                      <div *ngFor="let comment of results[currentModalIndex].comments; index as ii">
+                        <div class="row" *ngIf="ii <=2 || results[currentModalIndex].viewAllComments">
+                          <div class="col-12">
+                            <p><b><a href="javascript:void(0)">{{comment.user}}</a></b> {{comment.comment}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="float-right" *ngIf="results[currentModalIndex].comments.length > 3 && !results[currentModalIndex].viewAllComments"><a href="javascript:void(0)" (click)="viewAllComments(currentModalIndex)">View all comments...</a></p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row mt-2">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-10">
+                      <div class="row">
+                        <div class="col-12">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label class="col-gray">{{commentPlaceholder}}</mat-label>
+                            <textarea matInput [(ngModel)]="results[currentModalIndex].currentComment" maxlength="200" [disabled]="!canMakeComments"></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-10">
+                      <div class="float-right">
+                        <button mat-raised-button color="primary" class="mb-2" *ngIf="results[currentModalIndex].currentComment != null && results[currentModalIndex].currentComment.length != 0" (click)="comment(currentModalIndex)">Submit</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button mat-button type="button" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>
