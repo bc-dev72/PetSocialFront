@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { RightSidebarComponent } from './layout/right-sidebar/right-sidebar.component'
 import { PageLoaderComponent } from './layout/page-loader/page-loader.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
@@ -48,6 +49,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     AppComponent,
     HeaderComponent,
+    RightSidebarComponent,
     PageLoaderComponent,
     SidebarComponent,
     AuthLayoutComponent,

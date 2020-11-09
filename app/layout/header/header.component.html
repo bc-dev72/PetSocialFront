@@ -4,7 +4,7 @@
       <a href="#" onClick="return false;" class="navbar-toggle collapsed"
         (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-expanded="false"></a>
       <a href="#" onClick="return false;" class="bars" (click)="mobileMenuSidebarOpen($event,'overlay-open')"></a>
-      <a class="navbar-brand" routerLink={{homePage}}>
+      <a class="navbar-brand">
         <!-- <img src="assets/images/logo.png" alt="" /> -->
         <!-- <span class="logo-name">Smart</span> -->
       </a>
@@ -19,7 +19,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right" *ngIf="isPetSocial">
         <!-- Full Screen Button -->
-        <li class="fullscreen">
+        <li >
           <button mat-icon-button class=" nav-notification-icons" style="color:#3f51b5" (click)="goHome()">
             <mat-icon>home</mat-icon>
           </button>
@@ -75,12 +75,12 @@
       <div class="row">
           <div class="col-12">
             <div class="row">
-              <div class="col-6">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="text-center">
                   <button mat-raised-button type="button" color="primary" (click)="getRandomImage()">Get Random Image</button>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="text-center">
                   <input type="file" name="filename" accept="image/*" (change)="createPostImageUploaded($event)">
                 </div>
