@@ -1,8 +1,9 @@
 import { Component, OnInit, HostListener} from '@angular/core';
 
 import {PostService} from '../../services/post.service';
-import {SearchPost} from '../../classes/posts/search-post';
+import {AccountService} from '../../services/account.service';
 
+import {SearchPost} from '../../classes/posts/search-post';
 import {FavoriteRequest} from '../../classes/posts/favorite-request';
 import {VoteRequest} from '../../classes/posts/vote-request';
 import {CommentRequest} from '../../classes/posts/comment-request';
@@ -27,7 +28,7 @@ export class HomePageComponent implements OnInit {
   gettingNewPage: boolean;
   noMoreResults: boolean;
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.currentPage = 0;
@@ -81,9 +82,9 @@ export class HomePageComponent implements OnInit {
 
 
   getPage() {
-
     this.postService.getHomePage(this.currentPage, "").subscribe((data: any) => {
       this.results = data;
+      console.log(this.results);
       this.loading = false;
     },
     (err)=>{});
@@ -151,6 +152,21 @@ export class HomePageComponent implements OnInit {
   viewAllComments(index) {
     this.results[index].viewAllComments = true;
   }
+
+  followUser(index) {
+    this.accountService.followUser(this.results[index].username).subscribe((data: any) => {
+      this.results[index].following = true;
+    },
+    (err)=>{this.updatePostError(index, err);});
+  }
+
+  unfollowUser(index) {
+    this.accountService.unfollowUser(this.results[index].username).subscribe((data: any) => {
+      this.results[index].following = false;
+    },
+    (err)=>{this.updatePostError(index, err);});
+  }
+
 
   updatePostError(index, error) {
     if(error.status == 401) {

@@ -32,6 +32,9 @@
                       </div>
                       <div class="col-10" style="padding-left:0px">
                         <a href="javascript:void(0)" [routerLink]="['/petsocial/profile', result.username]"><h5 class="float-left">{{result.username}}</h5></a>
+                        <a (click)="followUser(i)" href="javascript:void(0);" *ngIf="!result.following && !result.userPosted"><i class="fas fa-plus-circle follow float-left ml-1"></i></a>
+                        <a (click)="unfollowUser(i)" href="javascript:void(0);" *ngIf="result.following && !result.userPosted"><i class="fas fa-check-circle followed float-left ml-1"></i></a>
+
                         <h5 class="float-right"><em>{{result.dateString}}</em></h5>
                       </div>
                     </div>

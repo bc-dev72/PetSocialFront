@@ -11,6 +11,9 @@ export class SearchPost {
   public totalFavorites: number;
   public currentVote: number;
 
+  public following: boolean;
+  public userPosted: boolean;
+
   public currentComment: string;
   public error: string;
   public changeLoading: boolean;
@@ -34,6 +37,8 @@ export class SearchPost {
     this.viewAllComments = false;
     this.currentVote = 0;
     this.deleted = false;
+    this.following = false;
+    this.userPosted = false;
   }
 
 }

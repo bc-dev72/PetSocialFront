@@ -24,6 +24,11 @@ export class PostService {
       {headers: this.postHeader()});
   }
 
+  getUserPostsFavorites(username, pageNumber, lastPost) {
+    return this.http.get<any>(this.baseUrl+"/public/profilefavorites?username="+username+"&pageNumber="+pageNumber+"&lastPost="+lastPost,
+      {headers: this.postHeader()});
+  }
+
   vote(postId, request) {
     return this.http.post<any>(this.baseUrl+"/api/post/"+postId+"/vote", request,
       {headers: this.postHeader()});

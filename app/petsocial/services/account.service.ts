@@ -29,6 +29,26 @@ export class AccountService {
       {headers: this.postHeader()});
   }
 
+  getProfileSummary(username) {
+    return this.http.get<any>(this.baseUrl+"/public/profile/"+username+"/getsummary",
+      {headers: this.postHeader()});
+  }
+
+  followUser(username) {
+    return this.http.get<any>(this.baseUrl+"/api/follow/"+username,
+      {headers: this.postHeader()});
+  }
+
+  unfollowUser(username) {
+    return this.http.get<any>(this.baseUrl+"/api/unfollow/"+username,
+      {headers: this.postHeader()});
+  }
+
+  updateProfile(request) {
+    return this.http.post<any>(this.baseUrl+"/api/updateprofile", request,
+      {headers: this.postHeader()});
+  }
+
   postHeader() {
     let tokenHeader = 'Bearer ' + localStorage.getItem('token');
     let headers = new HttpHeaders();
